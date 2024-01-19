@@ -6,6 +6,7 @@ import { UserId } from 'src/infra/decorators/user-id.decorator'
 import { CreateShortenedUrlDto, RedirectUrlDto } from 'src/domain/dtos/shortened-url.dto'
 import { UrlShortenerUseCases } from 'src/domain/use-cases/url-shortener/url-shortener.use-cases'
 import { Response } from 'express'
+import { OptionalJwtAuthGuard } from 'src/infra/auth/guards/optional-jwt-auth.guard'
 
 @ApiTags('Url Shortener')
 @Controller('api/url-shortener')
@@ -26,9 +27,14 @@ export class UrlShortenerController {
     return this.urlShortenerUseCases.getShortenedUrl(shortCode)
   }
 
+  @ApiBearerAuth()
+  @UseGuards(OptionalJwtAuthGuard)
   @Post()
-  async createPurchase(@Body() createShortenedDto: CreateShortenedUrlDto) {
-    return this.urlShortenerUseCases.createShortedUrl(createShortenedDto)
+  async createShortenedUrl(@UserId() userId: string, @Body() createShortenedDto: CreateShortenedUrlDto) {
+    return this.urlShortenerUseCases.createShortedUrl({
+      ...createShortenedDto,
+      createdBy: userId
+    })
   }
 
   @ApiBearerAuth()

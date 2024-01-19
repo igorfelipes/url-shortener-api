@@ -1,6 +1,6 @@
 import { IShortenedUrlsRepository } from 'src/domain/abstracts/shortened-urls-repository.abstract'
 import { ShortenedUrls } from 'src/infra/data-services/mysql/entities/shortened-urls.entity'
-import { Repository } from 'typeorm'
+import { IsNull, Repository } from 'typeorm'
 
 export class MysqlShortenedUrlsRepository implements IShortenedUrlsRepository {
   private _repository: Repository<ShortenedUrls>
@@ -9,12 +9,13 @@ export class MysqlShortenedUrlsRepository implements IShortenedUrlsRepository {
     this._repository = repository
   }
   getAll(createdBy: string): Promise<ShortenedUrls[]> {
-    return this._repository.find({
-      where: {
+    return this._repository
+      .createQueryBuilder('shortened_urls')
+      .where({
         createdBy,
-        deletedAt: null
-      }
-    })
+        deletedAt: IsNull()
+      })
+      .getMany()
   }
   getByShortCode(shortCode: string): Promise<ShortenedUrls> {
     return this._repository.findOneBy({ shortCode })
@@ -35,10 +36,14 @@ export class MysqlShortenedUrlsRepository implements IShortenedUrlsRepository {
     return this._repository.findOneBy({ shortCode })
   }
 
-  delete(shortCode: string): Promise<void> {
-    this._repository.update(shortCode, {
-      deletedAt: new Date()
-    })
+  async delete(shortCode: string): Promise<void> {
+    this._repository
+      .createQueryBuilder()
+      .select()
+      .update()
+      .set({ deletedAt: new Date() })
+      .where({ shortCode })
+      .execute()
     return
   }
 }
