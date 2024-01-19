@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { mock } from 'jest-mock-extended'
-import { JwtStrategy } from 'src/infra/auth/strategies/jwt.strategy'
+import { JwtStrategy } from './jwt.strategy'
 
 describe('JwtStrategy', () => {
   let jwtStrategy: JwtStrategy

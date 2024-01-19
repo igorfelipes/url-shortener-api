@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing'
 import { mock } from 'jest-mock-extended'
-import { IDataServices } from 'src/domain/abstracts'
-import { CreateUserDto } from 'src/domain/dtos'
-import { User } from 'src/domain/entities'
-import { UserFactoryService } from 'src/domain/use-cases/user/user-factory.service'
-import { UserUseCases } from 'src/domain/use-cases/user/user.use-cases'
+import { UserUseCases } from './user.use-cases'
+import { IDataServices } from '../../../domain/abstracts'
+import { UserFactoryService } from '../../../domain/use-cases/user/user-factory.service'
+import { CreateUserDto } from '../../../domain/dtos'
+import { User } from '../../../domain/entities'
 
 describe('UserUseCases', () => {
   let userUseCases: UserUseCases

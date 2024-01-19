@@ -1,3 +1,4 @@
+import { ShortenedUrls } from 'src/infra/data-services/mysql/entities/shortened-urls.entity'
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 
 @Entity({
@@ -10,7 +11,9 @@ export class User {
   @Column()
   name: string
 
-  @Column()
+  @Column({
+    unique: true
+  })
   email: string
 
   @Column()
@@ -19,8 +22,18 @@ export class User {
   @Column()
   password: string
 
-  // Relationships
+  @Column({
+    default: () => 'CURRENT_TIMESTAMP'
+  })
+  createdAt: Date
 
-  // @OneToMany(() => Purchase, purchase => purchase.customer)
-  // purchases: Purchase[];
+  @Column({
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP'
+  })
+  updatedAt: Date
+
+  // Relationships
+  @OneToMany(() => ShortenedUrls, (shortenedUrls) => shortenedUrls.createdBy)
+  shortenedUrls: ShortenedUrls[]
 }

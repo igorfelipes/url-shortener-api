@@ -8,6 +8,9 @@ import { AuthModule } from 'src/infra/auth/auth.module'
 import { AuthController } from 'src/app/auth.controller'
 import { AuthUseCasesModule } from 'src/domain/use-cases/auth/auth-use-cases.module'
 import { UserUseCasesModule } from 'src/domain/use-cases/user/user-use-cases.module'
+import { UrlShortenerUseCasesModule } from 'src/domain/use-cases/url-shortener/url-shortener.module'
+import { UrlShortenerController } from 'src/app/url-shortener.controller'
+import { apiConfig } from 'src/config/api.config'
 
 @Module({
   imports: [
@@ -21,12 +24,14 @@ import { UserUseCasesModule } from 'src/domain/use-cases/user/user-use-cases.mod
       }
     }),
     ConfigModule.forFeature(databaseConfig()),
+    ConfigModule.forFeature(apiConfig()),
     DataServicesModule,
     AuthModule,
     UserUseCasesModule,
-    AuthUseCasesModule
+    AuthUseCasesModule,
+    UrlShortenerUseCasesModule
   ],
-  controllers: [UserController, AuthController],
+  controllers: [UserController, AuthController, UrlShortenerController],
   providers: []
 })
 export class MainModule {}
