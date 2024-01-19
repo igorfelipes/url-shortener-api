@@ -1,6 +1,6 @@
-import { loggerConfig } from '@app/common/configs'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
+import { loggerConfig } from 'src/common/configs/logger.config'
 
 describe('logConfig', () => {
   jest.clearAllMocks()

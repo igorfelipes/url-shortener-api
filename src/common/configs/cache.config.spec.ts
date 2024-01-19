@@ -1,4 +1,4 @@
-import { cacheConfig as cacheConfigRegister } from '@app/common/configs'
+import { cacheConfig as cacheConfigRegister } from '../configs'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
 

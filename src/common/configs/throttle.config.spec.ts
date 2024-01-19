@@ -1,6 +1,6 @@
-import { throttleConfig } from '@app/common/configs'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Test } from '@nestjs/testing'
+import { throttleConfig } from 'src/common/configs/throttle.config'
 
 describe('ThrottleConfig', () => {
   jest.clearAllMocks()
